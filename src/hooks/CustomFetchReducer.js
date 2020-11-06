@@ -33,6 +33,7 @@ export const useFetchReducer = (url, time) => {
 
     useEffect(() => {
         const timeOut = setTimeout(async() => {
+            
             dispatch({ type: 'LOADING'})
             try {
                 const response = await fetch(url)
@@ -40,6 +41,7 @@ export const useFetchReducer = (url, time) => {
                 const clearData = dataResponse.data
                 dispatch({ type: 'SUCCESS', payload: clearData})
             } catch (error) {
+                
                 dispatch({ type: 'FAILURE', payload: error})
             }
         }, time);

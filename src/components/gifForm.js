@@ -13,6 +13,9 @@ border-radius: 20px;
 &:hover {
     border: 1px solid red;
 }
+@media (max-width: 992px){
+        width: 320px;
+}
 `
 const ContainerInput = styled.div`
 display: flex;
@@ -22,22 +25,41 @@ align-items: center;
 
 const GifsGrid = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     margin: 0 auto;
     max-width: 1000px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+     @media (max-width: 992px){
+        grid-template-columns: 1fr;
+  }
+  @media (max-width: 1024px) and (min-width: 993px){
+        grid-template-columns: 1fr 1fr 1fr;
+  }
 `
 const GifDiv = styled.div`
-
+    display: flex;
+    justify-content: center;
+    align-items: initial;
+    @media (max-width: 992px){
+        padding: 0.5rem;
+       
+  }
+`
+const GifP = styled.p`
+position: absolute;
+max-width: 190px;
+text-align: center;
 `
 
 const GifForm = () => {
-    const [ search, setSearch ] = useState('')
+    const [ search, setSearch ] = useState('random')
     const key = '9EmOFaV2f4ckc3N7qTE7gOYZMx8m7bQ7'
     const url = search && `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${encodeURI(search)}&limit=10&offset=0&rating=g&lang=en`
     
     //Tanto useFetchReducer como useCustomFetch funcionan sin tocar ninguna otra linea de código
 
-    const { loading, data } = useFetchReducer(url, 2250)
+    const { loading, data } = useFetchReducer(url, 2250,)
 
     console.log(data)
 
@@ -62,7 +84,7 @@ const GifForm = () => {
                 {data.map((gif)=>(
                     <>
                     <GifDiv>
-                    <p>{gif.title}</p>
+                    <GifP>{gif.title}</GifP>
                     <img src={gif.images.fixed_width.url} alt={gif.title} />
                     </GifDiv>
                     </>

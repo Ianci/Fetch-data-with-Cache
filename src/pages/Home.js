@@ -2,7 +2,7 @@ import React from 'react';
 import GifForm from '../components/gifForm'
 import styled from '@emotion/styled'
 import img1 from '../images/Img1.png'
-
+import Footer from '../components/footer/Footer'
 const Container = styled.div`
   max-width: 1050px;
   color: #fff;
@@ -20,6 +20,9 @@ const Title = styled.h1`
     top: 25px;
     padding-left: 220px;
     font-size: 35px;
+    @media (max-width: 992px){
+       display: none;
+    }
 `
 
 const Home = () => {
@@ -31,7 +34,7 @@ const Home = () => {
         
 
         <GifForm />
-
+        <Footer />
         </Container>
         </>
      );
