@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import useCustomFetch from '../hooks/CustomFetch'
 import { useFetchReducer } from '../hooks/CustomFetchReducer'
 import styled from '@emotion/styled'
-
+import Spinner from '../components/spinner/Spinner'
+import Pagination from '../components/paginate/Pagination.js'
 const InputStyled = styled.input`
 outline: none;
 border: 0.2px solid white;
@@ -25,7 +26,7 @@ align-items: center;
 
 const GifsGrid = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     margin: 0 auto;
     max-width: 1000px;
     margin-top: 2rem;
@@ -54,18 +55,38 @@ text-align: center;
 
 const GifForm = () => {
     const [ search, setSearch ] = useState('random')
+    const [ currentPage, setCurrentPage] =useState(1)
+    const [ gifPerPage, setGifPerPage ] = useState(12)
+    const indexOfLastItem = currentPage * gifPerPage
+    const indexOfFirstItem = indexOfLastItem - gifPerPage
+
     const key = '9EmOFaV2f4ckc3N7qTE7gOYZMx8m7bQ7'
-    const url = search && `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${encodeURI(search)}&limit=10&offset=0&rating=g&lang=en`
+    const limit= 50
+    const url = search && `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${encodeURI(search)}&limit=${limit}&offset=0&rating=g&lang=en`
     
     //Tanto useFetchReducer como useCustomFetch funcionan sin tocar ninguna otra linea de código
 
-    const { loading, data } = useFetchReducer(url, 2250,)
-
-    console.log(data)
-
+    const { loading, data } = useFetchReducer(url, 2250)
+    
+    let currentGifs;
+    if(data){
+        currentGifs = data.slice(indexOfFirstItem, indexOfLastItem)
+    }
+        
+  
+    
+    
+   
+    //Input value
     const handleChange = e => {
         setSearch(e.target.value)
     }
+    //Pagination function
+    const selectedPage = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    }
+
+   
     return ( 
         <>
         <ContainerInput>
@@ -76,12 +97,12 @@ const GifForm = () => {
         />
         </ContainerInput>
 
-        <GifsGrid>
-        {loading && <p>Loading...</p>}
+        <GifsGrid >
+        {loading && <Spinner />}
         {data &&
         (
             <>
-                {data.map((gif)=>(
+                {currentGifs.map((gif)=>(
                     <>
                     <GifDiv>
                     <GifP>{gif.title}</GifP>
@@ -92,6 +113,12 @@ const GifForm = () => {
             </>
         )}
         </GifsGrid>
+        <Pagination 
+        selectedPage={selectedPage}
+        currentPage={currentPage}
+        gifPerPage={gifPerPage}
+        limit={limit}
+        />
         </>
      );
 }
