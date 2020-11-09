@@ -1,11 +1,13 @@
-import { BrowserRouter as Router, Switch, Route, Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from './pages/Home'
+import Gif from './pages/gif'
+
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path="/" exact component={Home} />
+        <Route path="/:id" component={Gif} />
       </Switch>
     </Router>
   );

@@ -1,5 +1,5 @@
 //Mismo custom hook pero ahora usando useReducer
-import { useState, useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 
 
 const initialState = {
@@ -30,7 +30,7 @@ const fetchReducer = (state, action) => {
 
 export const useFetchReducer = (url, time) => {
     const [ state, dispatch] = useReducer(fetchReducer, initialState)
-    const [ gifData, setGifData] = useState([])
+  
     useEffect(() => {
         const timeOut = setTimeout(async() => {
             
@@ -39,8 +39,8 @@ export const useFetchReducer = (url, time) => {
                 const response = await fetch(url)
                 const dataResponse = await response.json()
                 const clearData = dataResponse.data
-                setGifData(clearData)
                 dispatch({ type: 'SUCCESS', payload: clearData})
+            
             } catch (error) {
                 
                 dispatch({ type: 'FAILURE', payload: error})
@@ -53,4 +53,16 @@ export const useFetchReducer = (url, time) => {
 
 
         return state
+}
+
+export const InstantFetch = (url) => {
+    const [ gifData, setData ] = useState([])
+    
+    const fetch = async() => {
+        const response = await fetch(url)
+        const data = await response.json()
+        console.log(data)
+        setData(data)
+    }
+    return gifData
 }

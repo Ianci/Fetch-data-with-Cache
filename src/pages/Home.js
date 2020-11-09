@@ -3,7 +3,7 @@ import GifForm from '../components/gifForm'
 import styled from '@emotion/styled'
 import img1 from '../images/Img1.png'
 import Footer from '../components/footer/Footer'
-import {useOnScreen} from '../hooks/useOnScreen'
+import LazyLoad from 'react-lazy-load';
 
 const Container = styled.div`
   max-width: 1050px;
@@ -31,9 +31,10 @@ const Title = styled.h1`
 
 
 const Home = () => {
+    /*
     const ref = useRef()
     const onScreen = useOnScreen(ref, '20px');
-  
+    */
     return ( 
         <>
         <Container>
@@ -42,19 +43,10 @@ const Home = () => {
         
 
         <GifForm />
-        <div
-        ref={ref}>
-
-        {onScreen ?
-        (
+        <LazyLoad offsetVertical={20}
+         onContentVisible={() => console.log('look ma I have been lazyloaded!')}>
             <Footer />
-        )
-            :
-            <p style={{display: "none"}}>Is not visible...yet</p>
-        }
-       
-
-        </div>
+        </LazyLoad>
         </Container>
         </>
      );

@@ -4,6 +4,7 @@ import { useFetchReducer } from '../hooks/CustomFetchReducer'
 import styled from '@emotion/styled'
 import Spinner from '../components/spinner/Spinner'
 import Pagination from '../components/paginate/Pagination.js'
+import { useHistory, Link } from 'react-router-dom'
 const InputStyled = styled.input`
 outline: none;
 border: 0.2px solid white;
@@ -57,6 +58,7 @@ const GifForm = () => {
     const [ search, setSearch ] = useState('random')
     const [ currentPage, setCurrentPage] =useState(1)
     const [ gifPerPage, setGifPerPage ] = useState(12)
+    const history = useHistory()
     const indexOfLastItem = currentPage * gifPerPage
     const indexOfFirstItem = indexOfLastItem - gifPerPage
 
@@ -68,14 +70,14 @@ const GifForm = () => {
 
     const { loading, data } = useFetchReducer(url, 2250)
     
+    console.log(data)
+
     let currentGifs;
     if(data){
         currentGifs = data.slice(indexOfFirstItem, indexOfLastItem)
     }
         
   
-    
-    
    
     //Input value
     const handleChange = e => {
@@ -86,6 +88,11 @@ const GifForm = () => {
         setCurrentPage(pageNumber)
     }
 
+    //Obtener el id del gif clickeado
+   const getId = id => {
+      history.push(id)
+       
+   }
    
     return ( 
         <>
@@ -97,16 +104,19 @@ const GifForm = () => {
         />
         </ContainerInput>
 
-        <GifsGrid >
+        <GifsGrid onClick={() => getId()}>
         {loading && <Spinner />}
         {data &&
         (
             <>
                 {currentGifs.map((gif)=>(
                     <>
-                    <GifDiv>
+                    <GifDiv
+                    key={gif.id}>
                     <GifP>{gif.title}</GifP>
-                    <img src={gif.images.fixed_width.url} alt={gif.title} />
+                    <img src={gif.images.fixed_width.url} alt={gif.title} 
+                    onClick={() => getId(gif.id)}
+                    />
                     </GifDiv>
                     </>
                 ))}
