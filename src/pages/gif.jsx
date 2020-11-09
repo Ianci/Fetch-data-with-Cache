@@ -22,19 +22,32 @@ const Gif = () => {
 
     useEffect(() => {
         const fetchData = async() => {
-            const result = await axios(urlGifs);
+            const result = await axios.get(urlGifs);
             setData(result.data)
            
         }
         fetchData()
     }, [])
 
-   
-  
-  
+    if(!data) return;
+   let title;
+   let date;
+   let gifImage;
+   let url;
+
+   let map = new Map(Object.entries(data).map(
+       ([key, value]) => [key, value]
+   ));
+   console.log(([...map][0][1]))
+   url = (([...map][0][1].url))
+   gifImage = (([...map][0][1].images.original.url))
+   title = (([...map][0][1].title))
+
        return (
         <Container>
-            <h1>Buenas</h1>
+            <h1>{title}</h1>
+            <img src={gifImage} alt='no alt' />
+            <a href={url} target="_blank" rel="noreferrer">URL</a>
         </Container>
       );
 }
