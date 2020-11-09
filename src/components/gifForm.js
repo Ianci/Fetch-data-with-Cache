@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import Spinner from '../components/spinner/Spinner'
 import Pagination from '../components/paginate/Pagination.js'
 import { useHistory, Link } from 'react-router-dom'
+
 const InputStyled = styled.input`
 outline: none;
 border: 0.2px solid white;
@@ -67,7 +68,9 @@ const GifForm = () => {
     const [ search, setSearch ] = useState('random')
     const [ currentPage, setCurrentPage] =useState(1)
     const [ gifPerPage, setGifPerPage ] = useState(12)
+
     const history = useHistory()
+
     const indexOfLastItem = currentPage * gifPerPage
     const indexOfFirstItem = indexOfLastItem - gifPerPage
 
@@ -97,7 +100,9 @@ const GifForm = () => {
         setCurrentPage(pageNumber)
     }
 
-   
+   //Pushear la id al path
+
+ 
    
     return ( 
         <>
@@ -120,6 +125,7 @@ const GifForm = () => {
                     key={gif.id}>
                     <GifP>{gif.title}</GifP>
                     <img src={gif.images.fixed_width.url} alt={gif.title} 
+                   
                     />
                     <div style={{position: "absolute" , display: "flex", justifyContent: "center"}}>
                     <Anchor href={gif.url} target="_blank" rel="noopener noreferrer">Expandir</Anchor>
