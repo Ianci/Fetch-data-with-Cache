@@ -55,14 +55,3 @@ export const useFetchReducer = (url, time) => {
         return state
 }
 
-export const InstantFetch = (url) => {
-    const [ gifData, setData ] = useState([])
-    
-    const fetch = async() => {
-        const response = await fetch(url)
-        const data = await response.json()
-        console.log(data)
-        setData(data)
-    }
-    return gifData
-}

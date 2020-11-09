@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
 
-export default function useTitle({ title }){
-    document.title = title
+export default function useTitle({ title = 'Giffy' }){
+    document.title = `${title}`
 }

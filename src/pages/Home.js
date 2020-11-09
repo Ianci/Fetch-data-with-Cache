@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import img1 from '../images/Img1.png'
 import Footer from '../components/footer/Footer'
 import LazyLoad from 'react-lazy-load';
-
+import  useTitle  from '../hooks/useTitle'
 const Container = styled.div`
   max-width: 1050px;
   color: #fff;
@@ -31,17 +31,13 @@ const Title = styled.h1`
 
 
 const Home = () => {
-    /*
-    const ref = useRef()
-    const onScreen = useOnScreen(ref, '20px');
-    */
+   
+    useTitle('Giffy')
     return ( 
         <>
         <Container>
         <img src={img1} alt="img-logo" style={{width: "140px"}}/>
         <Title>Bienvenido a Gifhy! </Title>
-        
-
         <GifForm />
         <LazyLoad offsetVertical={20}
          onContentVisible={() => console.log('look ma I have been lazyloaded!')}>

@@ -43,6 +43,7 @@ const GifDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: initial;
+    flex-direction: row;
     @media (max-width: 992px){
         padding: 0.5rem;
        
@@ -53,7 +54,15 @@ position: absolute;
 max-width: 190px;
 text-align: center;
 `
+const Anchor = styled.a`
+  background-color: #FF6392;
+  position: absolute;
+  text-decoration: none;
+  margin-top: 179px;
+  color: white;
+  font-weight: bold;
 
+`
 const GifForm = () => {
     const [ search, setSearch ] = useState('random')
     const [ currentPage, setCurrentPage] =useState(1)
@@ -88,11 +97,7 @@ const GifForm = () => {
         setCurrentPage(pageNumber)
     }
 
-    //Obtener el id del gif clickeado
-   const getId = id => {
-      history.push(id)
-       
-   }
+   
    
     return ( 
         <>
@@ -104,7 +109,7 @@ const GifForm = () => {
         />
         </ContainerInput>
 
-        <GifsGrid onClick={() => getId()}>
+        <GifsGrid>
         {loading && <Spinner />}
         {data &&
         (
@@ -115,9 +120,13 @@ const GifForm = () => {
                     key={gif.id}>
                     <GifP>{gif.title}</GifP>
                     <img src={gif.images.fixed_width.url} alt={gif.title} 
-                    onClick={() => getId(gif.id)}
                     />
+                    <div style={{position: "absolute" , display: "flex", justifyContent: "center"}}>
+                    <Anchor href={gif.url} target="_blank" rel="noopener noreferrer">Expandir</Anchor>
+                    </div>
+                    
                     </GifDiv>
+                    
                     </>
                 ))}
             </>
