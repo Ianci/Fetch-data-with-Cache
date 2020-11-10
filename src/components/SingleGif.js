@@ -66,16 +66,21 @@ const SingleGif = () => {
     
 
     if(loading) return <Spinner />
-    if(error) return <Error404 />
+    
     return ( 
         <>
         <Container>
       
+       
+        
         <Title>{title}</Title>
         <Paragraph>Creado: {import_datetime}</Paragraph>
         <img src={url} alt="no alt" />
         <Anchor href={bitly_gif_url} target="_blank" rel="noreferrer">Abrir en página original</Anchor>
         <Button onClick={()=> history.push('/')}>Volver</Button>
+        
+        
+        
         </Container>
         </>
      );
