@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import useCustomFetch from '../hooks/CustomFetch'
 import { useFetchReducer } from '../hooks/CustomFetchReducer'
 import styled from '@emotion/styled'
 import Spinner from '../components/spinner/Spinner'
 import Pagination from '../components/paginate/Pagination.js'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const InputStyled = styled.input`
 outline: none;
@@ -45,6 +44,7 @@ const GifDiv = styled.div`
     justify-content: center;
     align-items: initial;
     flex-direction: row;
+    margin: 5px;
     @media (max-width: 992px){
         padding: 0.5rem;
        
@@ -59,7 +59,6 @@ const Anchor = styled.a`
   background-color: #FF6392;
   position: absolute;
   text-decoration: none;
-  margin-top: 179px;
   color: white;
   font-weight: bold;
 
@@ -69,6 +68,7 @@ const GifForm = () => {
     const [ currentPage, setCurrentPage] =useState(1)
     const [ gifPerPage, setGifPerPage ] = useState(12)
 
+    console.log(setGifPerPage)
     const history = useHistory()
 
     const indexOfLastItem = currentPage * gifPerPage
@@ -82,7 +82,7 @@ const GifForm = () => {
 
     const { loading, data } = useFetchReducer(url, 2250)
     
-    console.log(data)
+    
 
     let currentGifs;
     if(data){
@@ -102,7 +102,9 @@ const GifForm = () => {
 
    //Pushear la id al path
 
- 
+    function idParameter(id){
+        history.push(id)
+    }
    
     return ( 
         <>
@@ -125,7 +127,7 @@ const GifForm = () => {
                     key={gif.id}>
                     <GifP>{gif.title}</GifP>
                     <img src={gif.images.fixed_width.url} alt={gif.title} 
-                   
+                    onClick={()=> idParameter(gif.id)}
                     />
                     <div style={{position: "absolute" , display: "flex", justifyContent: "center"}}>
                     <Anchor href={gif.url} target="_blank" rel="noopener noreferrer">Expandir</Anchor>

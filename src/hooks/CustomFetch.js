@@ -28,5 +28,4 @@ const useCustomFetch = (url, time) => {
     return { data, error, loading }
 }
  
-export default useCustomFetch;
-
+export default useCustomFetch
